@@ -1,5 +1,8 @@
+using Application.Services;
+using Domain.Repositories;
 using Infrastructure;
 using Infrastructure.Mapping;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 internal class Program
@@ -7,6 +10,9 @@ internal class Program
     private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        builder.Services.AddScoped<IDepartmentAndEmployeeRepository, DepartmentAndEmployeeRepository>();
+        builder.Services.AddScoped<DepartmentAndEmployeeService>();
 
         builder.Services.AddControllers();
         IConfiguration config = GetConfig();

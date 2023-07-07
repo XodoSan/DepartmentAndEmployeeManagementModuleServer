@@ -25,7 +25,7 @@ namespace Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Entities.Person", b =>
+            modelBuilder.Entity("Domain.Entities.Employee", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,17 +35,17 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("SubdivisionId")
+                    b.Property<Guid>("DepartmentId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SubdivisionId");
+                    b.HasIndex("DepartmentId");
 
-                    b.ToTable("Person");
+                    b.ToTable("Employee");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Subdivision", b =>
+            modelBuilder.Entity("Domain.Entities.Department", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -57,23 +57,23 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Subdivision");
+                    b.ToTable("Department");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Person", b =>
+            modelBuilder.Entity("Domain.Entities.Employee", b =>
                 {
-                    b.HasOne("Domain.Entities.Subdivision", "Subdivision")
-                        .WithMany("Persons")
-                        .HasForeignKey("SubdivisionId")
+                    b.HasOne("Domain.Entities.Department", "Department")
+                        .WithMany("Employees")
+                        .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Subdivision");
+                    b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Subdivision", b =>
+            modelBuilder.Entity("Domain.Entities.Department", b =>
                 {
-                    b.Navigation("Persons");
+                    b.Navigation("Employees");
                 });
 #pragma warning restore 612, 618
         }

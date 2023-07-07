@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33801.468
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DepartmentAndEmployeeManagementModuleApi", "DepartmentAndEmployeeManagementModule\DepartmentAndEmployeeManagementModuleApi.csproj", "{C459E892-1221-407E-B67B-E0F6530378DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DepartmentAndEmployeeManagementModule", "DepartmentAndEmployeeManagementModule\DepartmentAndEmployeeManagementModule.csproj", "{C459E892-1221-407E-B67B-E0F6530378DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{1B340A65-519D-408D-B6C6-4F37E84B1DD5}"
 EndProject
