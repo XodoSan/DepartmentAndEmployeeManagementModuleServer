@@ -15,15 +15,15 @@ namespace DepartmentAndEmployeeManagementModule.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetAllEmployees()
+        public async Task<IActionResult> GetAllEmployees(CancellationToken cancellationToken)
         {
-            return Ok(await _service.GetAllEmployees());
+            return Ok(await _service.GetAllEmployees(cancellationToken));
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetAllDepartments()
+        public async Task<IActionResult> GetDepartmentsHierarchy(CancellationToken cancellationToken)
         {
-            return Ok(await _service.GetAllDepartments());
+            return Ok(await _service.GetDepartmentsHierarchy(cancellationToken));
         }
     }
 }

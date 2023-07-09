@@ -20,14 +20,14 @@ namespace Infrastructure
                 .HasForeignKey(x => x.DepartmentId);
 
             modelBuilder.Entity<ReferenceDepartment>()
-                .HasOne(x => x.Department)
-                .WithMany(x => x.ChildDepartments)
-                .HasForeignKey(x => x.DepartmentId);
+                .HasOne(x => x.ParentDepartment)
+                .WithMany(x => x.ParentReferences)
+                .HasForeignKey(x => x.ParentDepartmentId);
 
             modelBuilder.Entity<ReferenceDepartment>()
-                .HasOne(x => x.ParentDepartment)
-                .WithMany(x => x.Departments)
-                .HasForeignKey(x => x.ParentDepartmentId);
+                .HasOne(x => x.Department)
+                .WithMany(x => x.ChildReferences)
+                .HasForeignKey(x => x.DepartmentId);
 
             modelBuilder.Entity<Employee>().HasData(new List<Employee>()
             {

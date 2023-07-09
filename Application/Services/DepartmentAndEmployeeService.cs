@@ -15,15 +15,15 @@ namespace Application.Services
             _repository = repository;
         }
 
-        public async Task<List<EmployeeDto>> GetAllEmployees()
+        public async Task<List<EmployeeDto>> GetAllEmployees(CancellationToken cancellationToken)
         {
-            var domainEmployees = await _repository.GetAllEmployeesAsync();
+            var domainEmployees = await _repository.GetAllEmployeesAsync(cancellationToken);
             return _mapper.Map<List<EmployeeDto>>(domainEmployees);
         }
 
-        public async Task<List<DepartmentDto>> GetAllDepartments()
+        public async Task<List<DepartmentDto>> GetDepartmentsHierarchy(CancellationToken cancellationToken)
         {
-            var domainDepartments = await _repository.GetAllDepartmentsAsync();
+            var domainDepartments = await _repository.GetAllDepartmentsAsync(cancellationToken);
             var mappedDepartments = _mapper.Map<List<DepartmentDto>>(domainDepartments);
             return mappedDepartments;
         }

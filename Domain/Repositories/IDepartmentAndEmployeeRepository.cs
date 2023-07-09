@@ -4,7 +4,7 @@ namespace Domain.Repositories
 {
     public interface IDepartmentAndEmployeeRepository
     {
-        public Task<List<Employee>> GetAllEmployeesAsync();
-        public Task<List<Department>> GetAllDepartmentsAsync();
+        public Task<List<Employee>> GetAllEmployeesAsync(CancellationToken cancellationToken);
+        public Task<List<Department>> GetAllDepartmentsAsync(CancellationToken cancellationToken);
     }
 }

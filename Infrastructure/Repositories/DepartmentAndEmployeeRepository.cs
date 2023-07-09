@@ -13,21 +13,24 @@ namespace Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<List<Employee>> GetAllEmployeesAsync()
+        public async Task<List<Employee>> GetAllEmployeesAsync(CancellationToken cancellationToken)
         {
             return await _dbContext
                 .Employees
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
         }
 
-        public async Task<List<Department>> GetAllDepartmentsAsync()
+        public async Task<List<Department>> GetAllDepartmentsAsync(CancellationToken cancellationToken)
         {
             return await _dbContext
                 .Departments
-                .Include(x => x.Departments)
-                .Include(x => x.ChildDepartments)
                 .Include(x => x.Employees)
-                .ToListAsync();
+                .Include(x => x.ParentReferences)
+                .ThenInclude(x => x.Department)
+                .Include(x => x.ChildReferences)
+                .ThenInclude(x => x.Department)
+                .Where(x => x.ParentReferences.Any(x => x.Department != null) || (x.ParentReferences.Count() == 0 && x.ChildReferences.Count() == 0))
+                .ToListAsync(cancellationToken);
         }
     }
 }

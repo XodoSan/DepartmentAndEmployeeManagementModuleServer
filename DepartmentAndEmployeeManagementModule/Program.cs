@@ -4,6 +4,7 @@ using Infrastructure;
 using Infrastructure.Mapping;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 internal class Program
 {
@@ -17,8 +18,13 @@ internal class Program
         builder.Services.AddControllers();
         IConfiguration config = GetConfig();
         string connectionString = config.GetConnectionString("DepartmentAndEmployee");
-        builder.Services.AddDbContext<AppDBContext>(options => options.UseNpgsql(connectionString,
-            x => x.MigrationsAssembly("Infrastructure")));
+        builder.Services.AddDbContext<AppDBContext>(options => {
+            options.UseNpgsql(connectionString,
+                x => x.MigrationsAssembly("Infrastructure"));
+
+            options.ConfigureWarnings(warnings =>
+            warnings.Ignore(CoreEventId.NavigationBaseIncludeIgnored));
+        });
 
         builder.Services.AddAutoMapper(typeof(MappingProfile));
 

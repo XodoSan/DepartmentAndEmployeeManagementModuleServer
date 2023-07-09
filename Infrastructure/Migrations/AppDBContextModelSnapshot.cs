@@ -34,7 +34,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
 
                     b.HasData(
                         new
@@ -116,7 +116,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
 
                     b.HasData(
                         new
@@ -241,7 +241,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ParentDepartmentId");
 
-                    b.ToTable("ReferenceDepartment");
+                    b.ToTable("ReferenceDepartment", (string)null);
 
                     b.HasData(
                         new
