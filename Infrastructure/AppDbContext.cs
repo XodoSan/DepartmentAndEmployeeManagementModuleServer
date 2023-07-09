@@ -19,15 +19,10 @@ namespace Infrastructure
                 .WithMany(x => x.Employees)
                 .HasForeignKey(x => x.DepartmentId);
 
-            modelBuilder.Entity<ReferenceDepartment>()
+            modelBuilder.Entity<Department>()
                 .HasOne(x => x.ParentDepartment)
-                .WithMany(x => x.ParentReferences)
+                .WithMany(x => x.ChildDepartments)
                 .HasForeignKey(x => x.ParentDepartmentId);
-
-            modelBuilder.Entity<ReferenceDepartment>()
-                .HasOne(x => x.Department)
-                .WithMany(x => x.ChildReferences)
-                .HasForeignKey(x => x.DepartmentId);
 
             modelBuilder.Entity<Employee>().HasData(new List<Employee>()
             {
@@ -52,31 +47,18 @@ namespace Infrastructure
 
             modelBuilder.Entity<Department>().HasData(new List<Department>()
             {
-                new() { Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860161"), Name = "Отдел розничных продаж" },
-                new() { Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860162"), Name = "Отдел оптовых продаж" },
-                new() { Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860163"), Name = "Склад" },
-                new() { Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860164"), Name = "Отдел доставки" },
-                new() { Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860165"), Name = "Отдел закупок" },
-                new() { Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860166"), Name = "Отдел проверки качества" },
-                new() { Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860167"), Name = "Инженерный отдел" },
-                new() { Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860168"), Name = "Отдел продаж" },
-                new() { Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860169"), Name = "Отдел логистики" },
+                new() { Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860161"), Name = "Отдел розничных продаж", ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860168") },
+                new() { Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860162"), Name = "Отдел оптовых продаж", ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860168") },
+                new() { Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860163"), Name = "Склад", ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860169") },
+                new() { Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860164"), Name = "Отдел доставки", ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860169") },
+                new() { Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860165"), Name = "Отдел закупок", ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860171") },
+                new() { Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860166"), Name = "Отдел проверки качества", ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860171") },
+                new() { Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860167"), Name = "Инженерный отдел", ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860171") },
+                new() { Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860168"), Name = "Отдел продаж", ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860170") },
+                new() { Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860169"), Name = "Отдел логистики", ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860170") },
                 new() { Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860170"), Name = "Отдел по обслуживанию клиентов" },
                 new() { Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860171"), Name = "Производственный отдел" },
                 new() { Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860172"), Name = "Бухгалтерия" },
-            });
-
-            modelBuilder.Entity<ReferenceDepartment>().HasData(new List<ReferenceDepartment>()
-            {
-                new() { Id = new Guid("ef56c9fb-889d-4dbb-98db-27883d8cb0e0"), ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860170"), DepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860168") },
-                new() { Id = new Guid("ef56c9fb-889d-4dbb-98db-27883d8cb0e1"), ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860170"), DepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860169") },
-                new() { Id = new Guid("ef56c9fb-889d-4dbb-98db-27883d8cb0e2"), ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860171"), DepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860167") },
-                new() { Id = new Guid("ef56c9fb-889d-4dbb-98db-27883d8cb0e3"), ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860171"), DepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860166") },
-                new() { Id = new Guid("ef56c9fb-889d-4dbb-98db-27883d8cb0e4"), ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860171"), DepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860165") },
-                new() { Id = new Guid("ef56c9fb-889d-4dbb-98db-27883d8cb0e5"), ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860168"), DepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860162") },
-                new() { Id = new Guid("ef56c9fb-889d-4dbb-98db-27883d8cb0e6"), ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860168"), DepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860161") },
-                new() { Id = new Guid("ef56c9fb-889d-4dbb-98db-27883d8cb0e7"), ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860169"), DepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860163") },
-                new() { Id = new Guid("ef56c9fb-889d-4dbb-98db-27883d8cb0e8"), ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860169"), DepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860164") },
             });
         }   
     }

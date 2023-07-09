@@ -16,14 +16,19 @@
         public string Name { get; set; }
 
         /// <summary>
-        /// Подразделения-ссылки-дети
+        /// Подразделения-дети
         /// </summary>
-        public ICollection<ReferenceDepartment>? ChildReferences { get; set; }
+        public ICollection<Department>? ChildDepartments { get; set; }
 
         /// <summary>
-        /// Подразделения-ссылки-родители
+        /// Подразделение-родитель
         /// </summary>
-        public ICollection<ReferenceDepartment>? ParentReferences { get; set; }
+        public Department? ParentDepartment { get; set; }
+
+        /// <summary>
+        /// Id подразделения-родителя
+        /// </summary>
+        public Guid? ParentDepartmentId { get; set; }
 
         /// <summary>
         /// Сотрудники данного подразделения

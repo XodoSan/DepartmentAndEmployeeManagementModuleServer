@@ -21,11 +21,16 @@ namespace Application.Services
             return _mapper.Map<List<EmployeeDto>>(domainEmployees);
         }
 
-        public async Task<List<DepartmentDto>> GetDepartmentsHierarchy(CancellationToken cancellationToken)
+        public async Task<List<DepartmentDto>> GetDepartmentsHierarchyAsync(CancellationToken cancellationToken)
         {
             var domainDepartments = await _repository.GetAllDepartmentsAsync(cancellationToken);
-            var mappedDepartments = _mapper.Map<List<DepartmentDto>>(domainDepartments);
-            return mappedDepartments;
+            return _mapper.Map<List<DepartmentDto>>(domainDepartments.Where(x => x.ParentDepartmentId == null));
+        }
+
+        public async Task<EmployeeDto> UpdateEmployeeFioAsync(CancellationToken cancellationToken, Guid employeeId, string fio)
+        {
+            var result = await _repository.UpdateEmployeeFioAsync(cancellationToken, employeeId, fio.Trim());
+            return _mapper.Map<EmployeeDto>(result);
         }
     }
 }

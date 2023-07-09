@@ -32,55 +32,69 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("ParentDepartmentId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Departments", (string)null);
+                    b.HasIndex("ParentDepartmentId");
+
+                    b.ToTable("Departments");
 
                     b.HasData(
                         new
                         {
                             Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860161"),
-                            Name = "Отдел розничных продаж"
+                            Name = "Отдел розничных продаж",
+                            ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860168")
                         },
                         new
                         {
                             Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860162"),
-                            Name = "Отдел оптовых продаж"
+                            Name = "Отдел оптовых продаж",
+                            ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860168")
                         },
                         new
                         {
                             Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860163"),
-                            Name = "Склад"
+                            Name = "Склад",
+                            ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860169")
                         },
                         new
                         {
                             Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860164"),
-                            Name = "Отдел доставки"
+                            Name = "Отдел доставки",
+                            ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860169")
                         },
                         new
                         {
                             Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860165"),
-                            Name = "Отдел закупок"
+                            Name = "Отдел закупок",
+                            ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860171")
                         },
                         new
                         {
                             Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860166"),
-                            Name = "Отдел проверки качества"
+                            Name = "Отдел проверки качества",
+                            ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860171")
                         },
                         new
                         {
                             Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860167"),
-                            Name = "Инженерный отдел"
+                            Name = "Инженерный отдел",
+                            ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860171")
                         },
                         new
                         {
                             Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860168"),
-                            Name = "Отдел продаж"
+                            Name = "Отдел продаж",
+                            ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860170")
                         },
                         new
                         {
                             Id = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860169"),
-                            Name = "Отдел логистики"
+                            Name = "Отдел логистики",
+                            ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860170")
                         },
                         new
                         {
@@ -116,7 +130,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("Employees", (string)null);
+                    b.ToTable("Employees");
 
                     b.HasData(
                         new
@@ -223,81 +237,13 @@ namespace Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Domain.Entities.ReferenceDepartment", b =>
+            modelBuilder.Entity("Domain.Entities.Department", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasOne("Domain.Entities.Department", "ParentDepartment")
+                        .WithMany("ChildDepartments")
+                        .HasForeignKey("ParentDepartmentId");
 
-                    b.Property<Guid>("DepartmentId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("ParentDepartmentId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.HasIndex("ParentDepartmentId");
-
-                    b.ToTable("ReferenceDepartment", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("ef56c9fb-889d-4dbb-98db-27883d8cb0e0"),
-                            DepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860168"),
-                            ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860170")
-                        },
-                        new
-                        {
-                            Id = new Guid("ef56c9fb-889d-4dbb-98db-27883d8cb0e1"),
-                            DepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860169"),
-                            ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860170")
-                        },
-                        new
-                        {
-                            Id = new Guid("ef56c9fb-889d-4dbb-98db-27883d8cb0e2"),
-                            DepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860167"),
-                            ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860171")
-                        },
-                        new
-                        {
-                            Id = new Guid("ef56c9fb-889d-4dbb-98db-27883d8cb0e3"),
-                            DepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860166"),
-                            ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860171")
-                        },
-                        new
-                        {
-                            Id = new Guid("ef56c9fb-889d-4dbb-98db-27883d8cb0e4"),
-                            DepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860165"),
-                            ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860171")
-                        },
-                        new
-                        {
-                            Id = new Guid("ef56c9fb-889d-4dbb-98db-27883d8cb0e5"),
-                            DepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860162"),
-                            ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860168")
-                        },
-                        new
-                        {
-                            Id = new Guid("ef56c9fb-889d-4dbb-98db-27883d8cb0e6"),
-                            DepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860161"),
-                            ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860168")
-                        },
-                        new
-                        {
-                            Id = new Guid("ef56c9fb-889d-4dbb-98db-27883d8cb0e7"),
-                            DepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860163"),
-                            ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860169")
-                        },
-                        new
-                        {
-                            Id = new Guid("ef56c9fb-889d-4dbb-98db-27883d8cb0e8"),
-                            DepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860164"),
-                            ParentDepartmentId = new Guid("dbf40cdb-71d7-46da-bdc3-735e8b860169")
-                        });
+                    b.Navigation("ParentDepartment");
                 });
 
             modelBuilder.Entity("Domain.Entities.Employee", b =>
@@ -311,30 +257,9 @@ namespace Infrastructure.Migrations
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ReferenceDepartment", b =>
-                {
-                    b.HasOne("Domain.Entities.Department", "Department")
-                        .WithMany("ChildDepartments")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Department", "ParentDepartment")
-                        .WithMany("Departments")
-                        .HasForeignKey("ParentDepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Department");
-
-                    b.Navigation("ParentDepartment");
-                });
-
             modelBuilder.Entity("Domain.Entities.Department", b =>
                 {
                     b.Navigation("ChildDepartments");
-
-                    b.Navigation("Departments");
 
                     b.Navigation("Employees");
                 });
