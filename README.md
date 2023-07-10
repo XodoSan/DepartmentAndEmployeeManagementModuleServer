@@ -1,10 +1,12 @@
 # DepartmentAndEmployeeManagementModuleServer :zap:
 
 Проект представляет собой обыкновенное API для общения с клиентом и передачи ему данных о подразделениях и сотрудниках, которые в них работают.
-Использованные технологии: ASP.NET Core 6.0, EF Core (npgSql), AutoMapper, EF Core Tools(Migrations), PostgreSQL.
+
+# Использованные технологии :ocean:
+ASP.NET Core 6.0, EF Core (npgSql), AutoMapper, EF Core Tools(Migrations), PostgreSQL.
 Приложение написано в N-layer архитектуре и с применением паттерна MVC.
 
-Инструкция к развёртыванию приложения:
+# Инструкция к развёртыванию приложения :key:
 1) Клонировать репозиторий "DepartmentAndEmployeeManagementModuleServer".
 2) Создать в проекте "DepartmentAndEmployeeManagementModule" файл "appsettings.json" и добавить туда строку подключения к базе Postgres: 
  {
