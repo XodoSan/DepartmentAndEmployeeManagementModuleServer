@@ -1,11 +1,13 @@
 ﻿using Application.DTOs;
 using AutoMapper;
 using Domain.Repositories;
+using Infrastructure.Exceptions;
 
 namespace Application.Services
 {
     public class DepartmentAndEmployeeService
     {
+        private static readonly char[] specialSimbols = new char[] { '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '|', '/' };
         private readonly IDepartmentAndEmployeeRepository _repository;
         private readonly IMapper _mapper;
 
@@ -29,8 +31,30 @@ namespace Application.Services
 
         public async Task<EmployeeDto> UpdateEmployeeFioAsync(CancellationToken cancellationToken, Guid employeeId, string fio)
         {
+            if (!IsFioValid(fio))
+            {
+                throw new InvalidEmployeeNameException(fio);
+            }
+
             var result = await _repository.UpdateEmployeeFioAsync(cancellationToken, employeeId, fio.Trim());
             return _mapper.Map<EmployeeDto>(result);
+        }
+
+        /// <summary>
+        /// Валидация ФИО сотрудника
+        /// </summary>
+        /// <param name="fio"></param>
+        /// <returns></returns>
+        private bool IsFioValid(string fio)
+        {
+            fio = fio.Trim();
+            //Проверка, есть ли фамилия имя и отчество и на отсутствие спец-символов
+            if (fio.Split(' ').Length != 3 || fio.Intersect(specialSimbols).Count() > 0)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

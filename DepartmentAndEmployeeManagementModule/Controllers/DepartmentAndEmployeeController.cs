@@ -48,7 +48,14 @@ namespace DepartmentAndEmployeeManagementModule.Controllers
             [FromRoute] Guid employeeId,
             [FromRoute] string newFio)
         {
-            return Ok(await _service.UpdateEmployeeFioAsync(cancellationToken, employeeId, newFio));
+            try
+            {
+                return Ok(await _service.UpdateEmployeeFioAsync(cancellationToken, employeeId, newFio));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
